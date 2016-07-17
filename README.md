@@ -26,3 +26,9 @@ https://www.quora.com/Data-Science-Can-machine-learning-be-used-for-time-series-
 
 https://www.accenture.com/us-en/analytics-index
 
+
+## Share Econ
+
+https://theinitium.com/article/20160716-opinion-books-airbnb/
+
+https://theinitium.com/article/20160108-international-whatsmineisyours/
