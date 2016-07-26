@@ -3,6 +3,22 @@ http://www.slideshare.net/tw_dsconf/practical-issues-in-machine-learning
 
 http://www.slideshare.net/tw_dsconf/feature-engineering-in-machine-learning
 
+http://deeplearning4j.org/eigenvector.html
+
+## Neural
+http://neuralnetworksanddeeplearning.com/chap1.html
+
+http://i.stack.imgur.com/oy2Bc.png
+
+
+## Time Series
+https://blog.pivotal.io/data-science-pivotal/products/forecasting-time-series-data-with-multiple-seasonal-periods
+
+https://www.otexts.org/fpp/6/5
+
+http://dasanlin888.pixnet.net/blog/post/34468877-%E5%AD%98%E6%B4%BB%E5%88%86%E6%9E%90%EF%BC%88survival-analysis%EF%BC%89%E4%BB%8B%E7%B4%B9%EF%BC%8D%E2%85%A0~%E6%99%A8%E6%99%B0%E7%B5%B1%E8%A8%88
+
+
 ## RapidMiner
 ### sweep parameter
 http://docs.rapidminer.com/studio/operators/modeling/optimization/parameters/optimize_parameters_evolutionary.html
@@ -26,6 +42,8 @@ https://www.quora.com/Data-Science-Can-machine-learning-be-used-for-time-series-
 
 https://www.accenture.com/us-en/analytics-index
 
+### PPM
+https://www.lce.com/pdfs/The-PMPdM-Program-124.pdf
 
 ## Share Econ
 
