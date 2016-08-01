@@ -1,9 +1,12 @@
-# ML
+## ML
 http://www.slideshare.net/tw_dsconf/practical-issues-in-machine-learning
 
 http://www.slideshare.net/tw_dsconf/feature-engineering-in-machine-learning
 
 http://deeplearning4j.org/eigenvector.html
+
+##PCA
+http://www.let.rug.nl/nerbonne/teach/rema-stats-meth-seminar/presentations/Ke-Tran-PCA-2011-May-24.pdf
 
 ## Neural
 http://neuralnetworksanddeeplearning.com/chap1.html
@@ -27,7 +30,7 @@ http://docs.rapidminer.com/studio/operators/modeling/optimization/parameters/opt
 
 http://docs.rapidminer.com/studio/operators/modeling/optimization/parameters/set_parameters.html
 
-## SC
+## Supply Chain
 http://cdn2.hubspot.net/hub/153059/file-1347479975-pdf/pdfs/Analytics_for_supply_chain_and_operations_7-2014_(1)_FINAL.pdf?t=1406638949368&submissionGuid=8e99a8b1-fdef-42c9-b56d-e61693546734
 
 https://logisticsviewpoints.com/2016/06/08/machine-learning-for-supply-chain-efficiencies/
