@@ -1,0 +1,138 @@
+library(forecast)
+mape<-function(data){
+	final<-c()
+	for(a in 2:nrow(data)){
+			f<-c()
+		for(b in 2:20){
+	if(data[1,b]==0){
+		ma<-(data[a,b]-data[1,b])
+	}else{
+		ma<-((data[a,b]-data[1,b])/data[1,b])
+	}
+		f<-c(f,ma)
+	}
+	final<-rbind(final,f)
+	}
+	
+	final<-rbind(as.numeric(data[1,2:20]),final)
+	final<-as.data.frame(final)
+	rownames(final)<-c("real","lm.pre","svm.pre","ksvm.pre","nn.pre","ts.pre")
+	return(final)
+}
+
+
+predictall<-function(data1,data2){
+#-------linear regrresion----------
+lm.model<-lm(Actual~.,data=as.data.frame(data1))
+lm.pre<-predict(lm.model,as.data.frame(data2))
+
+#-------svm----------
+#install.packages("e1071")
+library(e1071)
+svm.model<-svm(Actual~.,data=data1)
+svm.pre<-predict(svm.model, as.data.frame(data2))
+
+#-------svm regrresion----------
+#install.packages("kernlab")
+library(kernlab)
+ksvm.model<-ksvm(Actual~.,data=data1)
+summary(ksvm.model)
+ksvm.pre<-predict(ksvm.model,as.data.frame(data2))
+
+#-------neutral network---------
+#install.packages("nnet")
+library(nnet)
+nn.model<-nnet(Actual~., data=data1,size=12, maxit=500, linout=T, decay=0.01)
+summary(nn.model)
+nn.pre<-predict(nn.model, data2, type="raw")
+
+#-------ts--------
+ts.pre<-result(Actual[1:108,(x+1)],2006,1,18)
+ts.pre<-as.numeric(ts.pre)
+ts.pre<-ts.pre[(length(ts.pre)-18):length(ts.pre)]
+#-------compare-----
+data3<-rbind(as.numeric(data2[,1]),as.numeric(lm.pre),
+		as.numeric(svm.pre),as.numeric(ksvm.pre),as.numeric(nn.pre),ts.pre)
+model<-c("real","lm.pre","svm.pre","ksvm.pre","nn.pre","ts.pre")
+colnames(data3)<-seq(1:19)
+data3<-as.data.frame(data3)
+data3<-cbind(model,data3)
+
+#calculate MAPE
+mape1<-mape(data3)
+mmape<-c(NA,mean(as.numeric(mape1[2,])),mean(as.numeric(abs(mape1[2,]))),
+mean(as.numeric(abs(mape1[4,]))),mean(as.numeric(abs(mape1[5,]))),
+mean(as.numeric(abs(mape1[6,]))))
+
+data3<-cbind(data3,mmape)
+
+return(data3)
+}
+
+ data.ts<-function(data,year,month){
+    data<-ts(data=data,start=c(year,month),frequency=12)
+  } 
+ 
+  #holtwinters function
+  holtwinters<-function(data,year,month,pnum){
+    data<-ts(data=data,start=c(year,month),frequency=12)
+    data.f<-HoltWinters(data)  #data.f$fitted to view values 
+    data.p<-predict(data.f, pnum) 
+    a<-as.numeric(data.f$fitted[,1])
+    b<-as.numeric(data.p)
+    all<- c(a,b)
+    all<-ts(all,start = c(year,month),frequency = 12)
+    return(all)
+  }
+
+ARIMA<-function(data,year,month,pnum){  
+    data<-ts(data=data,start=c(year,month),frequency=12)
+    bestfit<-auto.arima(data,allowdrift=TRUE, stepwise=TRUE)
+    fit<-forecast(bestfit,7)
+	data.f<-fitted(bestfit)
+	for(z in 1:length(data.f)){
+	if (data.f[z]<0)
+		data.f[z]=0
+	}
+    data.e<-(data-data.f)^2
+    SSE<-sum(data.e)
+    
+    fit1<-auto.arima(data,D=1,allowdrift=TRUE, stepwise=TRUE)
+    data.f1<-fitted(fit1)
+	for(z in 1:length(data.f1)){
+	if (data.f1[z]<0)
+		data.f1[z]=0
+	}
+    data.e1<-(data-data.f1)^2
+    SSE1<-sum(data.e1)
+    
+    if (SSE1<SSE){
+      bestfit<-fit1
+      data.f<-fitted(fit1)
+    }
+    
+    data.p<-forecast(bestfit,pnum)
+    data.p<-as.data.frame(data.p)
+	data.p<-data.p[,1]
+    a<-as.numeric(data.f)
+    b<-as.numeric(data.p)
+    all<-  c(a,b)
+    all<-ts(all,start = c(year,month),frequency = 12)
+    return(all)
+  }
+
+result<-function(data,year,month,pnum){
+  a<-ARIMA(data,year,month,pnum)
+  b<-holtwinters(data,year,month,pnum)
+  
+  bestfit<-a
+    num<-length(data)
+    a.residual<-data-a[1:num]
+    b.residual<-data-b[1:num]
+  if(sum(a.residual^2)/length(a.residual)>sum(na.omit(b.residual)^2)/length(na.omit(b.residual))){
+    bestfit<-b
+  }
+  return(bestfit)
+}
+
+
