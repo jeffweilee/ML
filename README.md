@@ -5,6 +5,13 @@ http://www.slideshare.net/tw_dsconf/feature-engineering-in-machine-learning
 
 http://deeplearning4j.org/eigenvector.html
 
+##Data science
+https://github.com/donnemartin/data-science-ipython-notebooks
+http://machine-learning-python.kspax.io/
+
+##scikit
+https://github.com/scikit-learn/scikit-learn
+
 ##PCA
 http://www.let.rug.nl/nerbonne/teach/rema-stats-meth-seminar/presentations/Ke-Tran-PCA-2011-May-24.pdf
 
@@ -15,13 +22,11 @@ http://i.stack.imgur.com/oy2Bc.png
 
 
 ## Time Series
-https://www.otexts.org/fpp/6
-https://www.otexts.org/fpp/6/5
-
 http://a-little-book-of-r-for-time-series.readthedocs.io/en/latest/src/timeseries.html
 
+https://www.otexts.org/fpp/6
+https://www.otexts.org/fpp/6/5
 https://blog.pivotal.io/data-science-pivotal/products/forecasting-time-series-data-with-multiple-seasonal-periods
-
 http://dasanlin888.pixnet.net/blog/post/34468877-%E5%AD%98%E6%B4%BB%E5%88%86%E6%9E%90%EF%BC%88survival-analysis%EF%BC%89%E4%BB%8B%E7%B4%B9%EF%BC%8D%E2%85%A0~%E6%99%A8%E6%99%B0%E7%B5%B1%E8%A8%88
 
 
