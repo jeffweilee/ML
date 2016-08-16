@@ -24,6 +24,11 @@ http://i.stack.imgur.com/oy2Bc.png
 ## Time Series
 http://a-little-book-of-r-for-time-series.readthedocs.io/en/latest/src/timeseries.html
 
+http://www.simafore.com/blog/bid/110752/Time-Series-Forecasting-from-windowing-to-predicting-in-RapidMiner
+http://www.simafore.com/blog/bid/109051/Time-Series-Forecasting-comparing-RapidMiner-and-R-for-analysis
+http://www.simafore.com/blog/bid/106430/Using-RapidMiner-for-time-series-forecasting-in-cost-modeling-1-of-2
+
+
 https://www.otexts.org/fpp/6
 https://www.otexts.org/fpp/6/5
 https://blog.pivotal.io/data-science-pivotal/products/forecasting-time-series-data-with-multiple-seasonal-periods
