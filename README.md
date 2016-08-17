@@ -1,12 +1,12 @@
 ## ML
-@ RapidMiner Blog case
+### RapidMiner Blog case
 http://www.simafore.com/blog/author/bala-deshpande
-@ ML Mind Map
+### ML Mind Map
 https://jixta.wordpress.com/2015/07/17/machine-learning-algorithms-mindmap/
-@ slides
+### slides
 http://www.slideshare.net/tw_dsconf/practical-issues-in-machine-learning
 http://www.slideshare.net/tw_dsconf/feature-engineering-in-machine-learning
-@ deep learning
+### deep learning
 http://deeplearning4j.org/eigenvector.html
 
 ##Data science
