@@ -8,6 +8,11 @@ http://www.slideshare.net/tw_dsconf/practical-issues-in-machine-learning
 http://www.slideshare.net/tw_dsconf/feature-engineering-in-machine-learning
 ### deep learning
 http://deeplearning4j.org/eigenvector.html
+### Spark
+https://0x0fff.com/spark-architecture/
+https://0x0fff.com/spark-architecture-shuffle/
+https://0x0fff.com/spark-memory-management/
+https://jaceklaskowski.gitbooks.io/mastering-apache-spark/content/spark-mllib.html
 
 ##Data science
 https://github.com/donnemartin/data-science-ipython-notebooks
