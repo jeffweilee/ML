@@ -1,12 +1,4 @@
 ## ML
-https://github.com/goharbor/harbor/issues/4793
-
-How about directly display both ```CVSS score``` and ```severity``` on UI?
-
-In present situation, severity is the only criteria for user to judge whether the docker image is too risky to deploy. What bothers us is that, ```severity high``` is so common (many docker image has high severity vulnerability) that it is not suitable to be the criteria to prevent docker image from deployed.
-
-By displaying CVSS score (via UI and API), deployment security criteria can be more meticulous and clear. Users can also judge by CVSS score on their own.
-
 ### RapidMiner Blog case
 http://www.simafore.com/blog/author/bala-deshpande
 ### ML Mind Map
