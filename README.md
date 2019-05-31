@@ -74,3 +74,40 @@ http://www.slideshare.net/MSAdvAnalytics/cortana-analytics-workshop-predictive-m
 
 https://theinitium.com/article/20160716-opinion-books-airbnb/
 https://theinitium.com/article/20160108-international-whatsmineisyours/
+
+
+
+
+2019-05-31T10:00:57Z [INFO] [/replication/adapter/harbor/adapter.go:41]: the factory for adapter harbor registered
+2019-05-31T10:00:57Z [INFO] [/replication/adapter/dockerhub/adapter.go:24]: Factory for adapter docker-hub registered
+2019-05-31T10:00:57Z [INFO] [/replication/adapter/native/adapter.go:30]: the factory for adapter docker-registry registered
+2019-05-31T10:00:57Z [INFO] [/replication/adapter/huawei/huawei_adapter.go:25]: the factory of Huawei adapter was registered
+2019-05-31T10:00:57Z [INFO] [/common/config/store/driver/rest.go:24]: get configuration from url: http://harbor180-harbor-core/api/internal/configurations 
+2019-05-31T10:00:57Z [INFO] [/common/dao/base.go:84]: Registering database: type-PostgreSQL host-harbor180-harbor-database port-5432 databse-registry sslmode-"disable"
+2019-05-31T10:00:57Z [INFO] [/common/dao/base.go:89]: Register database completed
+2019-05-31T10:00:57Z [INFO] [/jobservice/worker/cworker/c_worker.go:415]: Register job *gc.GarbageCollector with name IMAGE_GC
+2019-05-31T10:00:57Z [INFO] [/jobservice/worker/cworker/c_worker.go:415]: Register job *replication.Replication with name REPLICATION
+2019-05-31T10:00:57Z [INFO] [/jobservice/worker/cworker/c_worker.go:415]: Register job *replication.Scheduler with name IMAGE_REPLICATE
+2019-05-31T10:00:57Z [INFO] [/jobservice/worker/cworker/c_worker.go:415]: Register job *sample.Job with name DEMO
+2019-05-31T10:00:57Z [INFO] [/jobservice/worker/cworker/c_worker.go:415]: Register job *scan.ClairJob with name IMAGE_SCAN
+2019-05-31T10:00:57Z [INFO] [/jobservice/worker/cworker/c_worker.go:415]: Register job *scan.All with name IMAGE_SCAN_ALL
+2019-05-31T10:00:57Z [INFO] [/jobservice/period/basic_scheduler.go:64]: Basic scheduler is started
+2019-05-31T10:00:57Z [INFO] [/jobservice/period/policy_store.go:285]: Load 1 periodic job policies
+2019-05-31T10:00:57Z [INFO] [/jobservice/period/enqueuer.go:82]: Periodic enqueuer is started
+2019-05-31T10:00:57Z [INFO] [/jobservice/period/policy_store.go:168]: Periodical job policy store is serving with policy auto sync enabled
+2019-05-31T10:00:57Z [INFO] [/jobservice/worker/cworker/c_worker.go:151]: Redis worker is started
+2019-05-31T10:00:57Z [INFO] [/jobservice/lcm/controller.go:74]: Status restoring loop is started
+2019-05-31T10:00:57Z [INFO] [/jobservice/hook/hook_agent.go:153]: Hook event retrying loop is started
+2019-05-31T10:00:57Z [INFO] [/jobservice/hook/hook_agent.go:157]: Basic hook agent is started
+2019-05-31T10:00:57Z [INFO] [/jobservice/runtime/bootstrap.go:182]: API server is serving at 8080 with [http] mode at node [harbor180-harbor-jobservice-575b975b4d-lq9sf:130.11.6.58]
+2019-05-31T10:00:57Z [INFO] [/jobservice/period/policy_store.go:156]: Subscribe redis channel {harbor_job_service_namespace}:period:policies:notifications
+2019-05-31T10:01:52Z [ERROR] [/jobservice/api/handler.go:288]: Serve http request 'GET /api/v1/jobs/26035525d8e775d848776692/log' error: 500 {"code":10009,"message":"failed to get the job log","details":"no log data getter is configured"}
+2019-05-31T10:02:33Z [INFO] [/jobservice/worker/cworker/c_worker.go:70]: Job incoming: {"name":"IMAGE_GC","id":"fd64d3dc3d8a2b0f04fe0a28","t":1559296950,"args":{"redis_url_reg":"redis://harbor180-harbor-redis:6379/2"},"unique":true}
+2019-05-31T10:02:33Z [INFO] [/common/config/store/driver/rest.go:24]: get configuration from url: http://harbor180-harbor-core/api/internal/configurations 
+2019-05-31T10:02:33Z [INFO] [/common/config/store/driver/rest.go:24]: get configuration from url: http://harbor180-harbor-core/api/internal/configurations 
+2019-05-31T10:02:33Z [INFO] [/common/registryctl/client.go:41]: initializing client for reigstry http://harbor180-harbor-registry:8080 ...
+2019-05-31T10:02:33Z [INFO] [/common/config/store/driver/rest.go:24]: get configuration from url: http://harbor180-harbor-core/api/internal/configurations 
+2019-05-31T10:02:33Z [INFO] [/jobservice/runner/redis.go:161]: start to run gc in job.
+2019-05-31T10:05:14Z [ERROR] [/registryctl/client/client.go:94]: Failed to start gc: 500
+2019-05-31T10:05:14Z [ERROR] [/jobservice/runner/redis.go:161]: failed to get gc result: Failed to start GC: 500
+2019-05-31T10:05:14Z [ERROR] [/jobservice/runner/redis.go:63]: |@_@| Job 'IMAGE_GC:fd64d3dc3d8a2b0f04fe0a28' exit with error: Failed to start GC: 500
