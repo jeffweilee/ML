@@ -87,3 +87,27 @@ https://theinitium.com/article/20160108-international-whatsmineisyours/
 (dgateway=($(ip r | grep default | awk '{print$3}')); dgateway_device=($(ip r | grep default | awk '{print$5}')); all_mac_device_ip_mapping=($(ip a | grep -v inet6 | grep -v -E '127\.[[:digit:]]{1,3}\.[[:digit:]]{1,3}\.[[:digit:]]{1,3}' | grep inet -B 2 | sed 's:^[ \t]*::g' | grep [.:] | cut -d ' ' -f2 | cut -d '/' -f1)); val=\"\"; firstflag=0; for i in ${!all_mac_device_ip_mapping[@]}; do if [[ $(echo ${all_mac_device_ip_mapping[i]} | grep -o : | wc -l) -gt 1 ]]; then mac=${all_mac_device_ip_mapping[i]}; elif [[ $(echo ${all_mac_device_ip_mapping[i]} | grep -o : | wc -l) -eq 1 ]]; then mac_device=${all_mac_device_ip_mapping[i]}; mac_device=$(echo ${mac_device} | cut -d ':' -f1 | cut -d '@' -f1); else for k in ${!dgateway_device[@]}; do if [[ ${dgateway_device[k]} == ${mac_device} ]]; then gw=${dgateway[k]}; break; else gw=NA; fi; done; if [[ $(ip a | grep ${all_mac_device_ip_mapping[i]} | grep -c dynamic) -gt 0 ]]; then edhcp=Y; else edhcp=N; fi; if [[ $firstflag -ne 0 ]]; then val=${val}~; fi; firstflag=1; val=${val}\\\"ADDRESS\\\":\\\"${mac}\\\",\\\"IP\\\":\\\"${all_mac_device_ip_mapping[i]}\\\",\\\"W_NICCONFIG_DefaultIPGateway\\\":\\\"${gw}\\\",\\\"DHCP_ENABLE\\\":\\\"${edhcp}\\\"; fi; done; echo ${val};)
 
 ```
+
+
+
+```
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+#include <signal.h>
+#include <unistd.h>
+#include <time.h>
+
+#define contentLen3096 3096
+
+#define SHELLSCRIPT "\
+#!/bin/bash \n \
+a=(1 2 3); echo ${a[1]};"
+
+FILE *fcmd1;
+char cmdResult1[contentLen3096];
+fcmd = popen(SHELLSCRIPT, "r");
+if (fgets(cmdResult1, sizeof(cmdResult1), fcmd1) != NULL) {
+	printf("[~~~] %s ===== \n", cmdResult1);
+}
+```
