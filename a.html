@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="http://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.css" />
+<script src="http://code.jquery.com/jquery-2.0.3.min.js"></script>
+<script src="http://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.js"></script>
+</head>
+<body>
+<div data-role="page" id="page-1">
+<div data-role="header">
+<h1>Actr Logger Page Title</h1>
+</div>
+<div data-role="content">
+<p>Page content goes here</p>
+<a href="actr://">Approval app</a> <br><br>
+<a href="awb://">Airwatch browser app</a> <br><br>
+
+<div onclick="javascript:redirect();">click me to redirect approval app</div><br><br>
+<div onclick="javascript:redirectweb();">click me to redirect web url</div>
+
+</div>
+<div data-role="footer">
+<h4>Page Footer</h4>
+</div>
+</div>
+
+<script>
+setTimeout(function(){ 
+var IS_IPAD = navigator.userAgent.match(/iPad/i) != null,
+IS_IPHONE = !IS_IPAD && ((navigator.userAgent.match(/iPhone/i) != null) || (navigator.userAgent.match(/iPod/i) != null)),
+IS_IOS = IS_IPAD || IS_IPHONE,
+IS_ANDROID = !IS_IOS && navigator.userAgent.match(/android/i) != null,
+IS_MOBILE = IS_IOS || IS_ANDROID;
+if(IS_IPHONE){
+	window.location = "actr://";
+}
+}, 2000);
+
+
+function redirect(){
+	window.location = "actr://";
+}
+
+
+function redirectweb(){
+	window.location = "awb://actruat.tsmc.com.tw";
+}
+
+</script>
+</body>
+</html>
