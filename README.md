@@ -111,3 +111,36 @@ if (fgets(cmdResult1, sizeof(cmdResult1), fcmd1) != NULL) {
 	printf("[~~~] %s ===== \n", cmdResult1);
 }
 ```
+
+
+```
+let deviceTokenString = deviceToken.reduce("") {
+            return $0 + String(format: "%02x", $1)
+        }
+        print("deviceTokenString: \(deviceTokenString)")
+        let json: [String: Any] = ["device_token": deviceTokenString]
+        let jsonData = try? JSONSerialization.data(withJSONObject: json)
+        
+        let url:NSURL = NSURL(string: "https://echo.apps.paas.nctu.me/")!;
+        let request:NSMutableURLRequest = NSMutableURLRequest(url: url as URL, cachePolicy: NSURLRequest.CachePolicy.reloadIgnoringLocalCacheData, timeoutInterval: 10);
+        request.httpMethod = "POST";
+        
+        request.httpBody = jsonData;
+        
+        let task = URLSession.shared.dataTask(with: request as URLRequest) {
+            data, response, error in
+            
+            if error != nil {
+                print("error=\(error)")
+                return
+            }
+            
+            print("response = \(response)")
+            
+            //將收到的資料轉成字串print出來看看
+            let responseString = NSString(data: data!, encoding: String.Encoding.utf8.rawValue)
+            print("responseString = \(responseString)")
+        }
+        task.resume();
+
+```
