@@ -265,7 +265,8 @@ class _TaskListViewState extends State<TaskListView> {
   Future<Null> _initGetTaskListData() async {
     todoAppService.getTaskInfo(widget.appName).then((taskInfoResult) {
       try {
-        if (taskInfoResult == null) {
+        if (taskInfoResult.typeCd == null ||
+          (taskInfoResult.typeCd != null && taskInfoResult.typeCd.isEmpty)) {
           print('[taskPage] _initGetTaskListData appName: ${widget.appName}');
           this.errCd = model.errCd;
           model.errCd = '';
@@ -296,7 +297,8 @@ class _TaskListViewState extends State<TaskListView> {
     await todoUtil
         .showProgress(
             todoAppService.getTaskInfo(widget.appName).then((taskInfoResult) {
-      if (taskInfoResult == null) {
+      if (taskInfoResult.typeCd == null ||
+          (taskInfoResult.typeCd != null && taskInfoResult.typeCd.isEmpty)) {
         print('[taskPage] _initGetTaskListData appName: ${widget.appName}');
         isServiceRetunNull = true;
         this.errCd = model.errCd;
