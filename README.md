@@ -148,4 +148,125 @@ let deviceTokenString = deviceToken.reduce("") {
 
 
 
+# tasklist
+```
+ //for initial only, doesn't have loading progress
+  Future<Null> _initGetTaskListData() async {
+    todoAppService.getTaskInfo(widget.appName).then((taskInfoResult) {
+      if (taskInfoResult == null ||
+          taskInfoResult.typeCd == null ||
+          (taskInfoResult.typeCd != null && taskInfoResult.typeCd.isEmpty)) {
+        print(
+            '[taskPage] [_initGetTaskListData] Error, appName: ${widget.appName}, errCd: ${model.errCd.length}');
+        this.errCd = model.errCd;
+        model.errCd = '';
+        this.errCd = this.errCd.isEmpty ? TodoUtil.ERRCD_2_UNEXP : this.errCd;
+        commonUtil.errHandle(this.errCd + '\n' + TodoUtil.SERVER_ERR_MSG,
+            funOK: () {
+          Navigator.pushReplacementNamed(context, '/home');
+        });
+      } else {
+        taskInfo = taskInfoResult;
+        print('[taskPage] [_initGetTaskListData] taskInfo: ' +
+            taskInfo.toJson().toString());
+        taskItems = taskInfo.taskListInfo;
+
+        /* check show approve/reject button and checkbox or not */
+        if (taskInfo.hasAction == 'Y') {
+          _isShowSignOff = true;
+        }
+        // no task
+        if (taskItems == null || (taskItems != null && taskItems.length == 0)) {
+          commonUtil.infoHandle(TodoUtil.NO_TASK_INFO, () {
+            Navigator.of(context).pushReplacementNamed('/home');
+          });
+        }
+      }
+      setState(() {
+        this._isInit = false;
+        cancelSearch();
+      });
+    });
+  }
+
+  Future<Null> _getTaskListData() async {
+    bool isServiceRetunNull = false;
+
+    await todoUtil
+        .showProgress(
+            todoAppService.getTaskInfo(widget.appName).then((taskInfoResult) {
+      if (taskInfoResult == null ||
+          taskInfoResult.typeCd == null ||
+          (taskInfoResult.typeCd != null && taskInfoResult.typeCd.isEmpty)) {
+        print('[taskPage] _initGetTaskListData appName: ${widget.appName}');
+        isServiceRetunNull = true;
+        this.errCd = model.errCd;
+        model.errCd = '';
+      } else {
+        taskInfo = taskInfoResult;
+        taskItems = taskInfo.taskListInfo;
+
+        /* check show approve/reject button and checkbox or not */
+        if (taskInfo.hasAction == 'Y') {
+          _isShowSignOff = true;
+        }
+      }
+
+      setState(() {
+        this._isInit = false;
+        cancelSearch();
+      });
+    }))
+        .then((Null) {
+      if (isServiceRetunNull) {
+        print(
+            '[taskPage] _getTaskListData isServiceRetunNull: $isServiceRetunNull');
+        commonUtil.errHandle(this.errCd + '\n' + TodoUtil.SERVER_ERR_MSG,
+            funOK: () {
+          Navigator.of(context).pushReplacementNamed('/home');
+        });
+      } else {
+        // no task
+        if (taskItems == null || taskItems.length == 0) {
+          commonUtil.infoHandle(TodoUtil.NO_TASK_INFO, () {
+            Navigator.of(context).pushReplacementNamed('/home');
+          });
+        }
+      }
+    });
+  }
+```
+
+#detailPage
+```
+Future<Null> _calc() async {
+    todoAppService
+        .getDetailApprovalInfo(widget.typeCd, widget.taskId)
+        .then((_) {
+      try {
+        setState(() {
+          this._isInit = false;
+          if (model != null &&
+              model.detailApprovalInfo != null &&
+              model.detailApprovalInfo.typeCd != null &&
+              model.detailApprovalInfo.taskId != null &&
+              model.errCd.isEmpty) {
+            subject = model?.detailApprovalInfo?.subject;
+            print("[detailPage] subject:" + subject);
+          } else {
+            this.errCd = model.errCd;
+            model.errCd = '';
+            this.errCd =
+                this.errCd.isEmpty ? TodoUtil.ERRCD_3_UNEXP : this.errCd;
+            this.resMsg = this.errCd + '\n' + TodoUtil.SERVER_ERR_MSG;
+            commonUtil.errHandle(this.resMsg);
+          }
+        });
+      } on Exception {
+        commonUtil.errHandle(this.errCd + '\n' + TodoUtil.SERVER_ERR_MSG);
+      }
+    });
+  }
+```
+
 
