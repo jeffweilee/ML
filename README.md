@@ -78,195 +78,22 @@ https://theinitium.com/article/20160108-international-whatsmineisyours/
 
 
 ```
-(if [ -f /etc/system-release ]; then s=$(cat /etc/system-release); elif [ -f /etc/redhat-release ]; then s=$(cat /etc/redhat-release); elif [ -f /etc/os-release ]; then s=$(cat /etc/os-release | grep PRETTY | cut -d '=' -f2 | sed -e 's/^\"//' -e 's/\"$//'); fi; s=$(echo ${s} | tr '[:upper:]' '[:lower:]'); IFS=$'\n'; if [[ -n $(echo $s | grep 'centos' ) ]] || [[ -n $(echo $s | grep 'red') && -n $(echo $s | grep 'hat') ]]; then a=($(rpm -q kernel --last | awk -F '[[:space:]][[:space:]]+' '{printf "%s,%s\n",$1,$2}')); elif [[ -n $(echo $s | grep 'buntu' ) ]]; then a=($(dpkg --get-selections | grep linux-image | awk '{printf "%s,%s\n",$1,a}' a='NA')); else a='NA,NA'; fi; val=\"\"; for ((i = 0; i < ${#a[@]}; i++)); do p=\\\"HotFixID\\\":\\\"$(echo ${a[i]} | cut -d , -f1)\\\",\\\"InstalledOn\\\":\\\"$(d=$(echo ${a[i]} | cut -d , -f2); if [ $d == 'NA' ]; then echo NA; elif [ $(locale | grep 'LANG' | grep 'zh_') ]; then echo ${a[i]} | cut -d , -f2 | grep -Eo '[0-9]+' | tr '\\n' ' ' | awk '{print $1$2$3}' | { read gmt ; date +%m/%d/%Y -d ${gmt} ; }; else echo ${a[i]} | cut -d , -f2 | { read gmt ; date +%m/%d/%Y -d ${gmt} ; }; fi; )\\\"; val=${val}${p}~; done; echo ${val:0:${#val}-1};)
-```
-
-
-
-```
-(dgateway=($(ip r | grep default | awk '{print$3}')); dgateway_device=($(ip r | grep default | awk '{print$5}')); all_mac_device_ip_mapping=($(ip a | grep -v inet6 | grep -v -E '127\.[[:digit:]]{1,3}\.[[:digit:]]{1,3}\.[[:digit:]]{1,3}' | grep inet -B 2 | sed 's:^[ \t]*::g' | grep [.:] | cut -d ' ' -f2 | cut -d '/' -f1)); val=\"\"; firstflag=0; for i in ${!all_mac_device_ip_mapping[@]}; do if [[ $(echo ${all_mac_device_ip_mapping[i]} | grep -o : | wc -l) -gt 1 ]]; then mac=${all_mac_device_ip_mapping[i]}; elif [[ $(echo ${all_mac_device_ip_mapping[i]} | grep -o : | wc -l) -eq 1 ]]; then mac_device=${all_mac_device_ip_mapping[i]}; mac_device=$(echo ${mac_device} | cut -d ':' -f1 | cut -d '@' -f1); else for k in ${!dgateway_device[@]}; do if [[ ${dgateway_device[k]} == ${mac_device} ]]; then gw=${dgateway[k]}; break; else gw=NA; fi; done; if [[ $(ip a | grep ${all_mac_device_ip_mapping[i]} | grep -c dynamic) -gt 0 ]]; then edhcp=Y; else edhcp=N; fi; if [[ $firstflag -ne 0 ]]; then val=${val}~; fi; firstflag=1; val=${val}\\\"ADDRESS\\\":\\\"${mac}\\\",\\\"IP\\\":\\\"${all_mac_device_ip_mapping[i]}\\\",\\\"W_NICCONFIG_DefaultIPGateway\\\":\\\"${gw}\\\",\\\"DHCP_ENABLE\\\":\\\"${edhcp}\\\"; fi; done; echo ${val};)
-
-```
-
-
-
-```
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
-#include <signal.h>
-#include <unistd.h>
-#include <time.h>
-
-#define contentLen3096 3096
-
-#define SHELLSCRIPT "\
-#!/bin/bash \n \
-a=(1 2 3); echo ${a[1]};"
-
-FILE *fcmd1;
-char cmdResult1[contentLen3096];
-fcmd = popen(SHELLSCRIPT, "r");
-if (fgets(cmdResult1, sizeof(cmdResult1), fcmd1) != NULL) {
-	printf("[~~~] %s ===== \n", cmdResult1);
-}
+private static final String ROUTE_CHANNEL = "com.tsmc.tphone/route";
+private BasicMessageChannel routeChannel ;
+routeChannel = new BasicMessageChannel<>(flutterView, ROUTE_CHANNEL, StringCodec.INSTANCE);
+routeChannel.send(userDefined);
 ```
 
 
 ```
-let deviceTokenString = deviceToken.reduce("") {
-            return $0 + String(format: "%02x", $1)
-        }
-        print("deviceTokenString: \(deviceTokenString)")
-        let json: [String: Any] = ["device_token": deviceTokenString]
-        let jsonData = try? JSONSerialization.data(withJSONObject: json)
-        
-        let url:NSURL = NSURL(string: "https://echo.apps.paas.nctu.me/")!;
-        let request:NSMutableURLRequest = NSMutableURLRequest(url: url as URL, cachePolicy: NSURLRequest.CachePolicy.reloadIgnoringLocalCacheData, timeoutInterval: 10);
-        request.httpMethod = "POST";
-        
-        request.httpBody = jsonData;
-        
-        let task = URLSession.shared.dataTask(with: request as URLRequest) {
-            data, response, error in
-            
-            if error != nil {
-                print("error=\(error)")
-                return
-            }
-            
-            print("response = \(response)")
-            
-            //將收到的資料轉成字串print出來看看
-            let responseString = NSString(data: data!, encoding: String.Encoding.utf8.rawValue)
-            print("responseString = \(responseString)")
-        }
-        task.resume();
+private static final String ROUTE_CHANNEL = "com.tsmc.tphone/route";
 
+ 
+private BasicMessageChannel routeChannel ;
+
+ 
+routeChannel = new BasicMessageChannel<>(flutterView, ROUTE_CHANNEL, StringCodec.INSTANCE);
+
+ 
+routeChannel.send(userDefined);
 ```
-
-
-
-
-# tasklist
-```
- //for initial only, doesn't have loading progress
-  Future<Null> _initGetTaskListData() async {
-    todoAppService.getTaskInfo(widget.appName).then((taskInfoResult) {
-      if (taskInfoResult == null ||
-          taskInfoResult.typeCd == null ||
-          (taskInfoResult.typeCd != null && taskInfoResult.typeCd.isEmpty)) {
-        print(
-            '[taskPage] [_initGetTaskListData] Error, appName: ${widget.appName}, errCd: ${model.errCd.length}');
-        this.errCd = model.errCd;
-        model.errCd = '';
-        this.errCd = this.errCd.isEmpty ? TodoUtil.ERRCD_2_UNEXP : this.errCd;
-        commonUtil.errHandle(this.errCd + '\n' + TodoUtil.SERVER_ERR_MSG,
-            funOK: () {
-          Navigator.pushReplacementNamed(context, '/home');
-        });
-      } else {
-        taskInfo = taskInfoResult;
-        print('[taskPage] [_initGetTaskListData] taskInfo: ' +
-            taskInfo.toJson().toString());
-        taskItems = taskInfo.taskListInfo;
-
-        /* check show approve/reject button and checkbox or not */
-        if (taskInfo.hasAction == 'Y') {
-          _isShowSignOff = true;
-        }
-        // no task
-        if (taskItems == null || (taskItems != null && taskItems.length == 0)) {
-          commonUtil.infoHandle(TodoUtil.NO_TASK_INFO, () {
-            Navigator.of(context).pushReplacementNamed('/home');
-          });
-        }
-      }
-      setState(() {
-        this._isInit = false;
-        cancelSearch();
-      });
-    });
-  }
-
-  Future<Null> _getTaskListData() async {
-    bool isServiceRetunNull = false;
-
-    await todoUtil
-        .showProgress(
-            todoAppService.getTaskInfo(widget.appName).then((taskInfoResult) {
-      if (taskInfoResult == null ||
-          taskInfoResult.typeCd == null ||
-          (taskInfoResult.typeCd != null && taskInfoResult.typeCd.isEmpty)) {
-        print('[taskPage] _initGetTaskListData appName: ${widget.appName}');
-        isServiceRetunNull = true;
-        this.errCd = model.errCd;
-        model.errCd = '';
-      } else {
-        taskInfo = taskInfoResult;
-        taskItems = taskInfo.taskListInfo;
-
-        /* check show approve/reject button and checkbox or not */
-        if (taskInfo.hasAction == 'Y') {
-          _isShowSignOff = true;
-        }
-      }
-
-      setState(() {
-        this._isInit = false;
-        cancelSearch();
-      });
-    }))
-        .then((Null) {
-      if (isServiceRetunNull) {
-        print(
-            '[taskPage] _getTaskListData isServiceRetunNull: $isServiceRetunNull');
-        commonUtil.errHandle(this.errCd + '\n' + TodoUtil.SERVER_ERR_MSG,
-            funOK: () {
-          Navigator.of(context).pushReplacementNamed('/home');
-        });
-      } else {
-        // no task
-        if (taskItems == null || taskItems.length == 0) {
-          commonUtil.infoHandle(TodoUtil.NO_TASK_INFO, () {
-            Navigator.of(context).pushReplacementNamed('/home');
-          });
-        }
-      }
-    });
-  }
-```
-
-#detailPage
-```
-Future<Null> _calc() async {
-    todoAppService
-        .getDetailApprovalInfo(widget.typeCd, widget.taskId)
-        .then((_) {
-      try {
-        setState(() {
-          this._isInit = false;
-          if (model != null &&
-              model.detailApprovalInfo != null &&
-              model.detailApprovalInfo.typeCd != null &&
-              model.detailApprovalInfo.taskId != null &&
-              model.errCd.isEmpty) {
-            subject = model?.detailApprovalInfo?.subject;
-            print("[detailPage] subject:" + subject);
-          } else {
-            this.errCd = model.errCd;
-            model.errCd = '';
-            this.errCd =
-                this.errCd.isEmpty ? TodoUtil.ERRCD_3_UNEXP : this.errCd;
-            this.resMsg = this.errCd + '\n' + TodoUtil.SERVER_ERR_MSG;
-            commonUtil.errHandle(this.resMsg);
-          }
-        });
-      } on Exception {
-        commonUtil.errHandle(this.errCd + '\n' + TodoUtil.SERVER_ERR_MSG);
-      }
-    });
-  }
-```
-
-
