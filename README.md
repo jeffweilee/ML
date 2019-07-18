@@ -78,22 +78,52 @@ https://theinitium.com/article/20160108-international-whatsmineisyours/
 
 
 ```
-private static final String ROUTE_CHANNEL = "com.tsmc.tphone/route";
-private BasicMessageChannel routeChannel ;
-routeChannel = new BasicMessageChannel<>(flutterView, ROUTE_CHANNEL, StringCodec.INSTANCE);
-routeChannel.send(userDefined);
+  Iterable<Widget> nowListTitles;
+  Iterable<Widget> listTitles;
+  
+  
+    bool isSortByName = false;
+  bool isSortByTotalCount = true;
+  
+   MenuChoice(title: 'Sort by name', icon: Icons.sort),
+    MenuChoice(title: 'Sort by count', icon: Icons.sort),
+    
+    
+    
+    case 'Sort by name':
+        print('[appPage] menu click Sort by name');
+
+        int listCount = 0;
+        if (isSortByName) {
+          items.sort((a, b) => a.sysName.compareTo(b.sysName));
+          nowListTitles = items.map(
+              (AppListInfo item) => buildListTile(context, item, listCount++));
+          isSortByName = false;
+        } else {
+          items.sort((a, b) => b.sysName.compareTo(a.sysName));
+          nowListTitles = items.map(
+              (AppListInfo item) => buildListTile(context, item, listCount++));
+          isSortByName = true;
+        }
+        setState(() {});
+        break;
+      case 'Sort by count':
+        print('[appPage] menu click Sort by task count');
+
+        int listCount = 0;
+        if (isSortByTotalCount) {
+          items.sort((a, b) => a.totalTaskCount.compareTo(b.totalTaskCount));
+          nowListTitles = items.map(
+              (AppListInfo item) => buildListTile(context, item, listCount++));
+          isSortByTotalCount = false;
+        } else {
+          items.sort((a, b) => b.totalTaskCount.compareTo(a.totalTaskCount));
+          nowListTitles = items.map(
+              (AppListInfo item) => buildListTile(context, item, listCount++));
+          isSortByTotalCount = true;
+        }
+        setState(() {});
+        break;
+  
 ```
 
-
-```
-private static final String ROUTE_CHANNEL = "com.tsmc.tphone/route";
-
- 
-private BasicMessageChannel routeChannel ;
-
- 
-routeChannel = new BasicMessageChannel<>(flutterView, ROUTE_CHANNEL, StringCodec.INSTANCE);
-
- 
-routeChannel.send(userDefined);
-```
