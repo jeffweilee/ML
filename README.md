@@ -77,53 +77,75 @@ https://theinitium.com/article/20160108-international-whatsmineisyours/
 
 
 
+multiline_dropdown_button_form_field.dart
+
 ```
-  Iterable<Widget> nowListTitles;
-  Iterable<Widget> listTitles;
-  
-  
-    bool isSortByName = false;
-  bool isSortByTotalCount = true;
-  
-   MenuChoice(title: 'Sort by name', icon: Icons.sort),
-    MenuChoice(title: 'Sort by count', icon: Icons.sort),
-    
-    
-    
-    case 'Sort by name':
-        print('[appPage] menu click Sort by name');
+  import 'package:flutter/material.dart';
 
-        int listCount = 0;
-        if (isSortByName) {
-          items.sort((a, b) => a.sysName.compareTo(b.sysName));
-          nowListTitles = items.map(
-              (AppListInfo item) => buildListTile(context, item, listCount++));
-          isSortByName = false;
-        } else {
-          items.sort((a, b) => b.sysName.compareTo(a.sysName));
-          nowListTitles = items.map(
-              (AppListInfo item) => buildListTile(context, item, listCount++));
-          isSortByName = true;
-        }
-        setState(() {});
-        break;
-      case 'Sort by count':
-        print('[appPage] menu click Sort by task count');
+/// Use this widget in place of [DropdownButtonFormField] until support
+/// for [isExapanded] and [isDense] is added. See:
+/// <https://github.com/flutter/flutter/issues/9211>
+/// A convenience widget that wraps a [DropdownButton] in a [FormField].
+class MultilineDropdownButtonFormField<T> extends FormField<T> {
+  /// Creates a [DropdownButton] widget wrapped in an [InputDecorator] and
+  /// [FormField].
+  ///
+  /// The [DropdownButton] [items] parameters must not be null.
+  MultilineDropdownButtonFormField({
+    Key key,
+    T value,
+    @required List<DropdownMenuItem<T>> items,
+    this.onChanged,
+    InputDecoration decoration = const InputDecoration(),
+    FormFieldSetter<T> onSaved,
+    FormFieldValidator<T> validator,
+    Widget hint,
+    bool isExpanded = false,
+    bool isDense = true,
+  })  : assert(decoration != null),
+        assert(isExpanded != null),
+        assert(isDense != null),
+        super(
+            key: key,
+            onSaved: onSaved,
+            initialValue: value,
+            validator: validator,
+            builder: (FormFieldState<T> field) {
+              final InputDecoration effectiveDecoration = decoration
+                  .applyDefaults(Theme.of(field.context).inputDecorationTheme);
+              return InputDecorator(
+                decoration:
+                    effectiveDecoration.copyWith(errorText: field.errorText),
+                isEmpty: value == null,
+                child: DropdownButtonHideUnderline(
+                  child: DropdownButton<T>(
+                    isExpanded: isExpanded,
+                    isDense: isDense,
+                    value: value,
+                    items: items,
+                    hint: hint,
+                    onChanged: field.didChange,
+                  ),
+                ),
+              );
+            });
 
-        int listCount = 0;
-        if (isSortByTotalCount) {
-          items.sort((a, b) => a.totalTaskCount.compareTo(b.totalTaskCount));
-          nowListTitles = items.map(
-              (AppListInfo item) => buildListTile(context, item, listCount++));
-          isSortByTotalCount = false;
-        } else {
-          items.sort((a, b) => b.totalTaskCount.compareTo(a.totalTaskCount));
-          nowListTitles = items.map(
-              (AppListInfo item) => buildListTile(context, item, listCount++));
-          isSortByTotalCount = true;
-        }
-        setState(() {});
-        break;
-  
+  /// Called when the user selects an item.
+  final ValueChanged<T> onChanged;
+  @override
+  FormFieldState<T> createState() =>
+      _MultilineDropdownButtonFormFieldState<T>();
+}
+
+class _MultilineDropdownButtonFormFieldState<T> extends FormFieldState<T> {
+  @override
+  MultilineDropdownButtonFormField<T> get widget => super.widget;
+  @override
+  void didChange(T value) {
+    super.didChange(value);
+    if (widget.onChanged != null) widget.onChanged(value);
+  }
+}
+
 ```
 
